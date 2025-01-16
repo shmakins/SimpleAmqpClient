@@ -61,9 +61,7 @@ else()
 endif()
 set(Boost_USE_STATIC_RUNTIME OFF)
 
-find_package(Boost 1.47.0 COMPONENTS chrono system REQUIRED)
-include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
-link_directories(${Boost_LIBRARY_DIRS})
+find_package(Boost 1.84.0 COMPONENTS chrono system REQUIRED)
 
 # Try using the CMake config modules first
 find_package(rabbitmq-c CONFIG QUIET)
@@ -153,6 +151,9 @@ set(SAC_LIB_SRCS
 
 
 add_library(SimpleAmqpClient ${SAC_LIB_SRCS})
+
+target_include_directories(SimpleAmqpClient PRIVATE ${Boost_INCLUDE_DIRS})
+target_link_directories(SimpleAmqpClient PRIVATE ${Boost_LIBRARY_DIRS})
 target_link_libraries(SimpleAmqpClient ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY} ${Boost_LIBRARIES} $<$<BOOL:${Boost_Dynamic_Linking_ENABLED}>:Boost::dynamic_linking>)
 
 if (WIN32)
