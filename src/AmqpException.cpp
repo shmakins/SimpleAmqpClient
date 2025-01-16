@@ -28,11 +28,10 @@
 
 #include "SimpleAmqpClient/AmqpException.h"
 
-#include <amqp.h>
-#include <amqp_framing.h>
+#include <rabbitmq-c/amqp.h>
 #include <assert.h>
+#include <sstream>
 
-#include <boost/lexical_cast.hpp>
 
 namespace AmqpClient {
 
@@ -73,11 +72,12 @@ void AmqpException::Throw(const amqp_rpc_reply_t &reply) {
     case AMQP_CHANNEL_CLOSE_METHOD:
       Throw(*(reinterpret_cast<amqp_channel_close_t *>(reply.reply.decoded)));
       break;
-    default:
-      throw std::logic_error(
-          std::string(
-              "Programming error: unknown server exception class/method")
-              .append(boost::lexical_cast<std::string>(reply.reply.id)));
+    default: {
+      std::ostringstream os;
+      os << "Programming error: unknown server exception class/method "
+         << reply.reply.id;
+      throw std::logic_error(os.str());
+    }
   }
 }
 
@@ -121,10 +121,12 @@ void AmqpException::Throw(const amqp_channel_close_t &reply) {
     case PreconditionFailedException::REPLY_CODE:
       throw PreconditionFailedException(what.str(), reply_text, reply.class_id,
                                         reply.method_id);
-    default:
-      throw std::logic_error(
-          std::string("Programming error: unknown channel reply code: ")
-              .append(boost::lexical_cast<std::string>(reply.reply_code)));
+    default: {
+      std::ostringstream os;
+      os << "Programming error: unknown channel reply code: "
+        << reply.reply_code;
+      throw std::logic_error(os.str());
+    }
   }
 }
 
@@ -183,10 +185,13 @@ void AmqpException::Throw(const amqp_connection_close_t &reply) {
     case AccessRefusedException::REPLY_CODE:
       throw AccessRefusedException(what.str(), reply_text, reply.class_id,
                                    reply.method_id);
-    default:
-      throw std::logic_error(
-          std::string("Programming error: unknown connection reply code: ")
-              .append(boost::lexical_cast<std::string>(reply.reply_code)));
+    default: {
+      std::ostringstream os;
+      os << "Programming error: unknown connection reply code: "
+        << reply.reply_code;
+      throw std::logic_error(os.str());
+    }
+
   }
 }
 

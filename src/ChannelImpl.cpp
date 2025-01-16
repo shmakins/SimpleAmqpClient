@@ -558,12 +558,9 @@ boost::uint32_t Channel::ChannelImpl::ComputeBrokerVersion(
   if (version_components.size() != 3) {
     return 0;
   }
-  boost::uint32_t version_major =
-      boost::lexical_cast<boost::uint32_t>(version_components[0]);
-  boost::uint32_t version_minor =
-      boost::lexical_cast<boost::uint32_t>(version_components[1]);
-  boost::uint32_t version_patch =
-      boost::lexical_cast<boost::uint32_t>(version_components[2]);
+  boost::uint32_t version_major = std::stoul(version_components[0]);
+  boost::uint32_t version_minor = std::stoul(version_components[1]);
+  boost::uint32_t version_patch = std::stoul(version_components[2]);
   return (version_major & 0xFF) << 16 | (version_minor & 0xFF) << 8 |
          (version_patch & 0xFF);
 }
