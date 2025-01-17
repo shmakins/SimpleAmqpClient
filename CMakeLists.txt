@@ -285,7 +285,7 @@ foreach(_lib ${Boost_LIBRARIES} ${extra_win32_targets})
     # Check if FindBoost.cmake provided actual library paths or targets
     if(TARGET ${_lib})
         get_target_property(_lib ${_lib} LOCATION)
-        message(WARNING "Using target ${_lib} as a library")
+#        message(WARNING "Using target ${_lib} as a library")
     endif()
 
     get_filename_component(_LIBPATH ${_lib} PATH)
