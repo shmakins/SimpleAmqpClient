@@ -28,7 +28,11 @@
 
 #include "SimpleAmqpClient/AmqpException.h"
 
+#ifdef __APPLE__
 #include <rabbitmq-c/amqp.h>
+#else
+#include <amqp.h>
+#endif
 #include <assert.h>
 #include <sstream>
 

@@ -29,8 +29,14 @@
  */
 
 // Put these first to avoid warnings about INT#_C macro redefinition
+
+#ifdef __APPLE__
 #include <rabbitmq-c/amqp.h>
 #include <rabbitmq-c/framing.h>
+#else
+#include <amqp.h>
+#include <amqp_framing.h>
+#endif
 
 #include <boost/array.hpp>
 

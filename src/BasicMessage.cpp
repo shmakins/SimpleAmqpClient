@@ -29,7 +29,11 @@
 // Put these first to avoid warnings about INT#_C macro redefinition
 #include "SimpleAmqpClient/BasicMessage.h"
 
+#ifdef __APPLE__
 #include <rabbitmq-c/amqp.h>
+#else
+#include <amqp.h>
+#endif
 
 #include <boost/optional/optional.hpp>
 #include <cstring>

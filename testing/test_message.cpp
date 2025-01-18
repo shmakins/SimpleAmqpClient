@@ -26,7 +26,12 @@
  * ***** END LICENSE BLOCK *****
  */
 
+
+#ifdef __APPLE__
 #include <rabbitmq-c/amqp.h>
+#else
+#include <amqp.h>
+#endif
 
 #include <algorithm>
 #include <boost/array.hpp>

@@ -27,8 +27,13 @@
  */
 
 // Put these first to avoid warnings about INT#_C macro redefinition
+#ifdef __APPLE__
 #include <rabbitmq-c/amqp.h>
 #include <rabbitmq-c/tcp_socket.h>
+#else
+#include <amqp.h>
+#include <amqp_tcp_socket.h>
+#endif
 #ifdef SAC_SSL_SUPPORT_ENABLED
 #include <amqp_ssl_socket.h>
 #endif
