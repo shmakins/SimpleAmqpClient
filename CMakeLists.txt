@@ -61,7 +61,7 @@ else()
 endif()
 set(Boost_USE_STATIC_RUNTIME OFF)
 
-find_package(Boost 1.84.0 COMPONENTS chrono system REQUIRED)
+find_package(Boost 1.83.0 COMPONENTS chrono system REQUIRED)
 
 # Try using the CMake config modules first
 find_package(rabbitmq-c CONFIG QUIET)
